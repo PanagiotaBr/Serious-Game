@@ -1,0 +1,4 @@
+repository "Serious Game Unity/Serious Game Unity Repository@6872308147292@cloud"
+  path "/"
+    br "/main"
+    co "/main"
