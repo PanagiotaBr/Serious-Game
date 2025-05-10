@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 5bc24391fb1ddbd44adeadbc628adf54
+guid: 1bd8c0eb0d2e24d4f87371d852d7f642
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5922754114360663000
-    second: Free Cow Sprites_0
-  - first:
-      213: -1589296601377610331
-    second: Free Cow Sprites_1
-  - first:
-      213: 1201215636998452967
-    second: Free Cow Sprites_2
-  - first:
-      213: 8911921523293518287
-    second: Free Cow Sprites_3
-  - first:
-      213: -2414581210190814732
-    second: Free Cow Sprites_4
+      213: -9180426125723624345
+    second: Portrait_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Free Cow Sprites_0
+      name: Portrait_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 33
-        width: 29
-        height: 20
+        x: 3
+        y: 0
+        width: 51
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,96 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 824ac8953862ecda0800000000000000
-      internalID: -5922754114360663000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Free Cow Sprites_1
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 33
-        width: 29
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5a5e628592fa1f9e0800000000000000
-      internalID: -1589296601377610331
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Free Cow Sprites_2
-      rect:
-        serializedVersion: 2
-        x: 66
-        y: 33
-        width: 29
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7e6ffede1439ba010800000000000000
-      internalID: 1201215636998452967
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Free Cow Sprites_3
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 1
-        width: 29
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fc9711678618dab70800000000000000
-      internalID: 8911921523293518287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Free Cow Sprites_4
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 1
-        width: 29
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4f16e3dae2fad7ed0800000000000000
-      internalID: -2414581210190814732
+      spriteID: 76c17812413989080800000000000000
+      internalID: -9180426125723624345
       vertices: []
       indices: 
       edges: []

@@ -53,5 +53,8 @@ TagManager:
   - name: trees
     uniqueID: 3343306345
     locked: 0
+  - name: player
+    uniqueID: 1596760485
+    locked: 0
   m_RenderingLayers:
   - Default
