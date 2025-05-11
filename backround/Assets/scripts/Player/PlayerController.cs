@@ -5,6 +5,8 @@ using System.Collections.Generic;  // Needed for List
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
+    public LayerMask solidObjectsLayer;
+    public LayerMask waterLayer;
     public bool isMoving;
     private Vector2 input;
     private Animator animator;
@@ -29,7 +31,8 @@ public class PlayerController : MonoBehaviour
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
-                StartCoroutine(Move(targetPos));
+                if (IsWalkable(targetPos))
+                    StartCoroutine(Move(targetPos));
             }
         }
 
@@ -44,6 +47,15 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
+
         isMoving = false;
+    }
+    private bool IsWalkable(Vector3 targetPos)
+    {
+        if (Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) != null)
+            return false;
+        if (Physics2D.OverlapCircle(targetPos, 0.2f, waterLayer) != null)
+            return false;
+        return true;
     }
 }
