@@ -13,9 +13,9 @@ TagManager:
   - Water
   - UI
   - 
-  - water
+  - 
   - SolidObjects
-  - Ground
+  - 
   - 
   - 
   - 
@@ -41,9 +41,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: water
-    uniqueID: 2137741273
     locked: 0
   - name: islands
     uniqueID: 2604734551
