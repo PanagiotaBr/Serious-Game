@@ -42,7 +42,12 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("isMoving", isMoving);
+        if(input.GetKeyDown(KeyCode.Space))
+        {
+            Interact();
+        }
     }
+    void Interact()
     IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
@@ -62,5 +67,5 @@ public class PlayerController : MonoBehaviour
             return false;
         }
         return true;
-    }
+    } 
 }
