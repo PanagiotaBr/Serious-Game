@@ -6,48 +6,57 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
     public LayerMask solidObjectsLayer;
+    public LayerMask interactableLayer;
     public bool isMoving;
     private Vector2 input;
     private Animator animator;
-    
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    public void HandleUpdate()
     {
         if (!isMoving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
 
-            // remove diagonal movement
-            if (input.x != 0)
-            {
-                input.y = 0;
-            }
+            if (input.x != 0) input.y = 0;
 
             if (input != Vector2.zero)
             {
                 animator.SetFloat("moveX", input.x);
                 animator.SetFloat("moveY", input.y);
-                
+
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
+
                 if (IsWalkable(targetPos))
                     StartCoroutine(Move(targetPos));
             }
         }
 
         animator.SetBool("isMoving", isMoving);
-        if(input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Interact();
         }
     }
     void Interact()
+    {   
+        var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+        var interactPos = transform.position + facingDir;
+
+        var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
+        if (collider != null)
+        {
+            collider.GetComponent<Interactable>()?.Interact();
+        }
+    }
+
     IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
@@ -60,12 +69,13 @@ public class PlayerController : MonoBehaviour
 
         isMoving = false;
     }
+
     private bool IsWalkable(Vector3 targetPos)
     {
-        if(Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) != null)
+        if(Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) != null)
         {
             return false;
         }
         return true;
-    } 
+    }
 }
