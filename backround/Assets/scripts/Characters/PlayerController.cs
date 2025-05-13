@@ -1,6 +1,7 @@
 using UnityEngine;
-using System.Collections;  // Needed for IEnumerator
-using System.Collections.Generic;  // Needed for List
+using UnityEngine.UI;  // Required for Button
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,8 +11,11 @@ public class PlayerController : MonoBehaviour
     public bool isMoving;
     private Vector2 input;
     private Animator animator;
+    public Joystick joystick;
+
 
     public static PlayerController Instance { get; private set; }
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -21,10 +25,19 @@ public class PlayerController : MonoBehaviour
     {
         if (!isMoving)
         {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
 
-            if (input.x != 0) input.y = 0;
+            if (horizontal != 0 || vertical != 0)
+            {
+                input.x = horizontal;
+                input.y = vertical;
+            }
+            else
+            {
+                input.x = joystick.Horizontal;
+                input.y = joystick.Vertical;
+            }
 
             if (input != Vector2.zero)
             {
@@ -41,13 +54,14 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("isMoving", isMoving);
+        // Add at the end of HandleUpdate()
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Interact();
         }
     }
-    void Interact()
-    {   
+    public void Interact()
+    {
         var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
         var interactPos = transform.position + facingDir;
 
@@ -67,16 +81,11 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
-
         isMoving = false;
     }
 
     private bool IsWalkable(Vector3 targetPos)
     {
-        if(Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) != null)
-        {
-            return false;
-        }
-        return true;
+        return Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) == null;
     }
 }

@@ -27,6 +27,7 @@ public class PlayerController2D : MonoBehaviour
     private bool isGrounded;
     private bool isOnLadder;
     private Vector3 respawnPoint;
+    public Joystick joystick;
 
     private void Awake()
     {
@@ -45,8 +46,16 @@ public class PlayerController2D : MonoBehaviour
     }
 
     private void Move()
-    {
-        float inputX = Input.GetAxis("Horizontal");
+    {   float inputX;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal != 0)
+        {
+            inputX = horizontal;
+        }
+        else
+        {
+            inputX = joystick.Horizontal;
+        }
 
         // Αν δεν είναι πάνω σε σκάλα, κινούμαστε φυσιολογικά
         if (!isOnLadder)
@@ -64,7 +73,7 @@ public class PlayerController2D : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded && !isOnLadder)
+        if ((joystick.Vertical >= .5f || Input.GetKeyDown(KeyCode.Space)) && isGrounded && !isOnLadder)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
@@ -76,7 +85,7 @@ public class PlayerController2D : MonoBehaviour
 
         if (isOnLadder)
         {
-            float vertical = Input.GetAxis("Vertical");
+            float vertical = joystick.Vertical;
             rb.gravityScale = 0f;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * climbSpeed);
         }
