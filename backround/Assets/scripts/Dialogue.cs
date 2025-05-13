@@ -5,9 +5,22 @@ using UnityEngine;
 [System.Serializable]
 public class Dialogue 
 {   
-    [SerializeField] List<string> lines;
+    [SerializeField] private string playerName;
+    [SerializeField] private string npcName;
+    [SerializeField] private Sprite playerportrait;
+    [SerializeField] private Sprite npcportrait;
+    [SerializeField] List<DialogueLine> lines;
 
-    public List<string> Lines{
-        get { return lines; }
-    }
+    public string PlayerName => playerName;
+    public string NPCName => npcName;
+    public Sprite PlayerPortrait => playerportrait;
+    public Sprite NPCPortrait => npcportrait;
+    public List<DialogueLine> Lines => lines;
+}
+[System.Serializable]
+public class DialogueLine
+{
+    public bool isPlayerSpeaking; // true = player, false = NPC
+    [TextArea]
+    public string line;
 }

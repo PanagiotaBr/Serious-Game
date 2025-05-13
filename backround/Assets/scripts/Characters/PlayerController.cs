@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 input;
     private Animator animator;
 
+    public static PlayerController Instance { get; private set; }
     private void Awake()
     {
         animator = GetComponent<Animator>();

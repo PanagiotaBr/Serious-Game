@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     Dialogue dialogue;
-    int currentLine=0;
+    int currentLine = 0;
     bool isTyping;
     public IEnumerator ShowDialogue(Dialogue newdialogue)
     {
@@ -33,7 +33,13 @@ public class DialogueManager : MonoBehaviour
         OnShowDialogue?.Invoke();
 
         dialogueBox.SetActive(true);
-        StartCoroutine(TypeDialogue(dialogue.Lines[0]));
+
+        nameText.text = "";
+        profileImage.sprite = null;
+        profileImage.gameObject.SetActive(false);
+
+        currentLine = 0;
+        StartCoroutine(TypeDialogue(dialogue.Lines[currentLine]));
     }
     public void HandleUpdate()
     {
@@ -48,16 +54,33 @@ public class DialogueManager : MonoBehaviour
             {
                 currentLine = 0;
                 dialogueBox.SetActive(false);
+                nameText.text = "";
+                profileImage.sprite = null;
+                profileImage.gameObject.SetActive(false);
                 OnCloseDialogue?.Invoke();
             }
         }
     }
 
-    public IEnumerator TypeDialogue(string line)
+    public IEnumerator TypeDialogue(DialogueLine line)
     {
         isTyping = true;
         dialogueText.text = "";
-        foreach (var letter in line.ToCharArray())
+
+        if (line.isPlayerSpeaking)
+        {
+            nameText.text = dialogue.PlayerName;
+            profileImage.sprite = dialogue.PlayerPortrait;
+        }
+        else
+        {
+            nameText.text = dialogue.NPCName;
+            profileImage.sprite = dialogue.NPCPortrait;
+        }
+
+        profileImage.gameObject.SetActive(profileImage.sprite != null);
+
+        foreach (var letter in line.line.ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(1f / lettersPerSecond); // Wait for the next frame
