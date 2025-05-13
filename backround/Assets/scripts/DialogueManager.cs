@@ -22,12 +22,20 @@ public class DialogueManager : MonoBehaviour
     int currentLine = 0;
     bool isTyping;
 
+    private int currentAction = 0;
+    private int totalOptions = 0;
+
     public event Action OnShowDialogue;
     public event Action OnCloseDialogue;
     public static DialogueManager Instance{get; private set;}
     private void Awake()
     {
         Instance = this;
+
+        if (dialogueBox == null) Debug.LogError("Dialogue Box is not assigned!");
+        if (dialogueText == null) Debug.LogError("Dialogue Text is not assigned!");
+        if (profileImage == null) Debug.LogError("Profile Image is not assigned!");
+        if (nameText == null) Debug.LogError("Name Text is not assigned!");
     }
 
     private bool awaitingChoice = false;
@@ -51,7 +59,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void HandleUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isTyping)
+        if (Input.GetKeyDown(KeyCode.Space) && !isTyping && !awaitingChoice)
         {
             ++currentLine;
             if (currentLine < dialogue.Lines.Count)
@@ -98,7 +106,8 @@ public class DialogueManager : MonoBehaviour
         if (dialogueline.hasOptions)
         {
             awaitingChoice = true;
-            StartCoroutine(ShowOptions(dialogueline.options));
+            currentAction = 0;
+            yield return StartCoroutine(ShowOptions(dialogueline.options));
         }
         else
         {
@@ -109,6 +118,7 @@ public class DialogueManager : MonoBehaviour
     }  
     private IEnumerator TypeOptionText(TextMeshProUGUI textComponent, string fullText)
     {
+        textComponent.text = "";
         foreach (char letter in fullText.ToCharArray())
         {
             textComponent.text += letter;
@@ -122,6 +132,8 @@ public class DialogueManager : MonoBehaviour
         option1Text.text = "";
         option2Text.text = "";
         option3Text.text = "";
+        
+        totalOptions = options.Count;
         // Set text for options, assuming there are up to 3 options for simplicity
         if (options.Count > 0)
             yield return StartCoroutine(TypeOptionText(option1Text, options[0].optionText));
@@ -132,6 +144,7 @@ public class DialogueManager : MonoBehaviour
 
         // Allow player to choose an option
         // Here you can use key presses, for example, to choose between options
+        UpdateActionSelection(currentAction);
     }
 
     public void HandleChoice(int choiceIndex)
@@ -182,22 +195,53 @@ public class DialogueManager : MonoBehaviour
     {
         if (!dialogueBox.activeInHierarchy) return; // Only check for input if dialogue is showing
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Space) && !isTyping) // Space key for selecting options
         {
-            HandleChoice(0); // First option
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            HandleChoice(1); // Second option
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            HandleChoice(2); // Third option
+            HandleChoice(currentAction); // Pass the current selected action to HandleChoice
         }
     }
+    private void HandleActionSelection()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (currentAction < totalOptions - 1)
+                ++currentAction;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (currentAction > 0)
+                --currentAction;
+        }
+
+        UpdateActionSelection(currentAction);
+
+        if (Input.GetKeyDown(KeyCode.Space) && ! isTyping)
+        {
+            HandleChoice(currentAction);
+        }
+    }
+    private void UpdateActionSelection(int selectedIndex)
+    {
+        // Reset the colors of all options to black
+        option1Text.color = Color.black;
+        option2Text.color = Color.black;    
+        option3Text.color = Color.black;
+
+        // Change the color of the currently selected option to blue
+        if (selectedIndex == 0)
+            option1Text.color = Color.blue;
+        else if (selectedIndex == 1)
+            option2Text.color = Color.blue;
+        else if (selectedIndex == 2)
+            option3Text.color = Color.blue;
+}
+
     private void Update()
     {
         if (awaitingChoice)
-            ChoiceUpdate();
+        {
+            HandleActionSelection();
+            HandleUpdate();
+        } 
     }
 }
