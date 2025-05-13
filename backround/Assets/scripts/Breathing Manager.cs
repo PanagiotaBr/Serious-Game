@@ -95,13 +95,13 @@ public class BreathingManager : MonoBehaviour
         switch (phase)
         {
             case Phase.Inhale:
-                newText = "<size=28><b>Inhale</b></size>\n<size=20>from your nose</size>";
+                newText = "<size=28><b>Inhale</b></size>\n<size=15>from your nose</size>";
                 break;
             case Phase.Hold:
                 newText = "<size=28><b>Hold</b></size>";
                 break;
             case Phase.Exhale:
-                newText = "<size=28><b>Exhale</b></size>\n<size=20>through your mouth</size>";
+                newText = "<size=28><b>Exhale</b></size>\n<size=15>through your mouth</size>";
                 break;
         }
 
