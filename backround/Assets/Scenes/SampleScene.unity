@@ -2142,7 +2142,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1617993717
-  m_SortingLayer: 2
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.90625, y: 0.65625, z: 0}
@@ -3275,7 +3275,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1690232745
-  m_SortingLayer: 1
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -6900,7 +6900,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -951660951
-  m_SortingLayer: 3
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.53125, y: 0.53125, z: 0}
@@ -7352,7 +7352,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1596760485
-  m_SortingLayer: 4
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 6701976620726949782, guid: ce11034572cf32042b47cf3ff5e98d49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7471,22 +7471,25 @@ MonoBehaviour:
     playerPortrait: {fileID: -9180426125723624345, guid: 1bd8c0eb0d2e24d4f87371d852d7f642, type: 3}
     npcPortrait: {fileID: -996944172213880842, guid: bd3bced98eb98a14eb38f054c1d0941f, type: 3}
     lines:
-    - line: How do you feel today?
+    - line: How are you feeling today?
       hasOptions: 0
       options: []
       isPlayerSpeaking: 0
     - line: 
       hasOptions: 1
       options:
-      - optionText: I want to relax
-        actionToTrigger: 1
-        responseLine: Go to island above
-      - optionText: I want to take some breaths
-        actionToTrigger: 2
-        responseLine: Go to left island
-      - optionText: I want to overcome my fears
-        actionToTrigger: 3
-        responseLine: Go to right island
+      - optionText: I need to relax.
+        actionToTrigger: GoToIslandAbove
+        responseLine: Take your time. Let's go somewhere peaceful. Heading to the
+          island above.
+      - optionText: I want to take some deep breaths.
+        actionToTrigger: GoToLeftIsland
+        responseLine: "Breathing helps. Let\u2019s go somewhere     with fresh air.
+          Moving to the island on          the left."
+      - optionText: I want to overcome my fears.
+        actionToTrigger: GoToRightIsland
+        responseLine: "That\u2019s brave of you. Let\u2019s face them together. Venturing
+          to the island on the right."
       isPlayerSpeaking: 1
   UpSprite: {fileID: -2075839574807891480, guid: ce11034572cf32042b47cf3ff5e98d49, type: 3}
   DownSprite: {fileID: 6701976620726949782, guid: ce11034572cf32042b47cf3ff5e98d49, type: 3}
@@ -7736,7 +7739,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1596760485
-  m_SortingLayer: 4
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 9ff0522d65a306147b6f49f7764b0a36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
