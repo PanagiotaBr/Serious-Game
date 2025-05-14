@@ -73,7 +73,7 @@ public class PlayerController2D : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        if ((joystick.Vertical >= .5f || Input.GetKeyDown(KeyCode.Space)) && isGrounded && !isOnLadder)
+        if ((joystick.Vertical >= .5f || Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && isGrounded && !isOnLadder)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
@@ -86,6 +86,12 @@ public class PlayerController2D : MonoBehaviour
         if (isOnLadder)
         {
             float vertical = joystick.Vertical;
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+                vertical = 1f;
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+                vertical = -1f;
+
             rb.gravityScale = 0f;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * climbSpeed);
         }
