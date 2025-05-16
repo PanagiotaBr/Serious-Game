@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;  // Required for Button
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 input;
     private Animator animator;
     public Joystick joystick;
+
 
 
     public static PlayerController Instance { get; private set; }
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             collider.GetComponent<Interactable>()?.Interact();
         }
+        
     }
 
     IEnumerator Move(Vector3 targetPos)
@@ -87,5 +91,21 @@ public class PlayerController : MonoBehaviour
     private bool IsWalkable(Vector3 targetPos)
     {
         return Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) == null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("left_portal"))
+        {
+            SceneManager.LoadScene("Menu Right Island - Exposure");
+        }
+        else if (collision.gameObject.CompareTag("right_portal"))
+        {
+            SceneManager.LoadScene("Menu Left Island - Serenity");
+        }
+        else if (collision.gameObject.CompareTag("top_portal"))
+        {
+            SceneManager.LoadScene("Breathing Island");
+        }
     }
 }

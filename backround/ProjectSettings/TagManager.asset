@@ -8,6 +8,9 @@ TagManager:
   - Ground
   - NPC
   - Ladder
+  - left_portal
+  - right_portal
+  - top_portal
   layers:
   - Default
   - TransparentFX
