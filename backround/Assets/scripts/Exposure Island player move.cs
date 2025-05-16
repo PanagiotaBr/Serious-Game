@@ -125,4 +125,13 @@ public class PlayerController2D : MonoBehaviour
             transform.position = respawnPoint;
         }
     }
+
+    public void OnJumpButtonPressed()
+    {
+        if (isGrounded && !isOnLadder)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
+    }
+
 }
