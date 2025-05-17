@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Scale_Loudness : MonoBehaviour
 {
-    public AudioSource source;
+    // public AudioSource source;
     public Vector2 minScale;
     public Vector2 maxScale;
     public AudioLoudnessDetection detector;
@@ -22,6 +22,7 @@ public class Scale_Loudness : MonoBehaviour
         float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
         if (loudness < threshold)
             loudness = 0;
-        transform.localScale = Vector2.Lerp(minScale, maxScale,loudness);
+        transform.localScale = Vector2.Lerp(minScale, maxScale, loudness);
+        // Debug.Log("Loudness: " + loudness);
     }
 }

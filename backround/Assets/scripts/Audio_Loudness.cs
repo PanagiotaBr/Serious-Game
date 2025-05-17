@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class AudioLoudnessDetection : MonoBehaviour
 {
@@ -7,25 +9,47 @@ public class AudioLoudnessDetection : MonoBehaviour
     
     void Start()
     {
-       MicrophoneToAudioClip(); 
+        if (!Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            StartCoroutine(RequestMicPermission());
+        }
+        else
+        {
+            MicrophoneToAudioClip();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator RequestMicPermission()
     {
-         
+        yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
+        if (Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            MicrophoneToAudioClip();
+        }
     }
+
 
     public void MicrophoneToAudioClip()
     {
-        string microphoneName = Microphone.devices[0];
-        microphoneClip = Microphone.Start(microphoneName, true, 20,AudioSettings.outputSampleRate);    
+    string microphoneName = Microphone.devices[0];
+    microphoneClip = Microphone.Start(microphoneName, true, 20, AudioSettings.outputSampleRate);
+    StartCoroutine(WaitForMicPosition());
+    }
+
+    private IEnumerator WaitForMicPosition()
+    {
+    yield return new WaitUntil(() => Microphone.GetPosition(Microphone.devices[0]) > 0);
+    Debug.Log("Microphone ready!");
     }
 
     public float GetLoudnessFromMicrophone()
     {
+        if (microphoneClip == null || !Microphone.IsRecording(Microphone.devices[0]))
+            return 0;
+
         return GetLoudnessFromAudioClip(Microphone.GetPosition(Microphone.devices[0]), microphoneClip);
     }
+
     public float GetLoudnessFromAudioClip(int clipPosition, AudioClip clip)
     {
         int startPosition = clipPosition - sampleWindow;
